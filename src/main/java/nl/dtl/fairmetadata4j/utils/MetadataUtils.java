@@ -524,7 +524,7 @@ public class MetadataUtils {
         addAgentStatements(model, metadata.getUri(), DCTERMS.PUBLISHER,
                 metadata.getPublisher(), DCAT_MODEL);
         addAccessRightsStatements(model, metadata.getUri(),
-                DCTERMS.ACCESS_RIGHTS, metadata.getAccessRights());
+                DCTERMS.ACCESS_RIGHTS, metadata.getAccessRights(), DCAT_MODEL);
         addStatement(model, metadata.getUri(), DCTERMS.LANGUAGE,
                 metadata.getLanguage());
         addStatement(model, metadata.getUri(), DCTERMS.DESCRIPTION,
@@ -770,13 +770,13 @@ public class MetadataUtils {
      * @param objc
      */
     private static void addAccessRightsStatements(Model model, IRI subj,
-            IRI pred, AccessRights objc) {
+            IRI pred, AccessRights objc, int metadataModel) {
         if (objc != null) {
             addStatement(model, subj, pred, objc.getUri());
             addStatement(model, objc.getUri(), RDF.TYPE,
                     DCTERMS.RIGHTS_STATEMENT);
             addAuthorizationStatements(model, objc.getUri(), DCTERMS.IS_PART_OF,
-                    objc.getAuthorization());
+                    objc.getAuthorization(), metadataModel);
         }
     }
 
@@ -790,7 +790,7 @@ public class MetadataUtils {
      * @param objc
      */
     private static void addAuthorizationStatements(Model model, IRI subj,
-            IRI pred, Authorization objc) {
+            IRI pred, Authorization objc, int metadataModel) {
         if (objc != null) {
             addStatement(model, subj, pred, objc.getUri());
             addStatement(model, objc.getUri(), RDF.TYPE,
@@ -800,7 +800,7 @@ public class MetadataUtils {
             });
             objc.getAuthorizedAgent().stream().forEach((agent) -> {
                 addAgentStatements(model, objc.getUri(),
-                        WebAccessControl.ACCESS_AGENT, agent);
+                        WebAccessControl.ACCESS_AGENT, agent, metadataModel);
             });
         }
     }

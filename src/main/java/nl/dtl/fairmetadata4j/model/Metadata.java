@@ -237,6 +237,7 @@ public class Metadata {
      */
     public void setSpecification(IRI specification) {
         this.specification = specification;
+    }
     /**
      * @return the accessRights
      */

@@ -796,7 +796,8 @@ public class MetadataUtils {
             addStatement(model, objc.getUri(), RDF.TYPE,
                     WebAccessControl.AUTHORIZATION);
             objc.getAccessMode().stream().forEach((mode) -> {
-                addStatement(model, objc.getUri(), DCTERMS.IS_PART_OF, mode);
+                addStatement(model, objc.getUri(), WebAccessControl.ACCESS_MODE, 
+                        mode);
             });
             objc.getAuthorizedAgent().stream().forEach((agent) -> {
                 addAgentStatements(model, objc.getUri(),
